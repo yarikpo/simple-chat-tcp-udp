@@ -1,7 +1,13 @@
 import socket
 from threading import Thread
+from colorama import init
+from termcolor import colored
+
+init()
+
 
 host = '127.0.0.1'
+host = input(colored('ip: ', 'blue'))
 port = 19090
 
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -12,7 +18,7 @@ tcp_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # tcp server for cr
 tcp_sock.bind((host, tcp_port))
 tcp_sock.listen(6)
 
-print('[SERVER STARTED]')
+print(colored('[SERVER STARTED]', 'green'))
 
 # udp_sock.listen(6)
 
@@ -44,7 +50,7 @@ def groupCreate():
                         exist = True
 
                 if exist == True:
-                    conn.send(b'Rename group, please!!!')
+                    conn.send(colored(b'Rename group, please!!!', 'red'))
                 else:
                     groups.append(data)
                     mes = f'[GROUP {data} HAS BEEN CREATED]'
@@ -55,9 +61,9 @@ def groupCreate():
                 pass
             finally:
                 conn.close()
-                print('.')
+                print(colored('.', 'yellow'))
                 for group in groups:
-                    print('|-->' + group)
+                    print(colored(f'|--> {group}', 'yellow'))
     except:
         try:
             conn.close()
@@ -93,14 +99,22 @@ while True:
                         break
 
                 if exist == False:
-                    print(f'There is no group like {clients[addr][1]}')             # TODO sending info about this to client
+                    print(colored(f'There is no group like {clients[addr][1]}', 'red'))             # TODO sending info about this to client
                     # udp_sock.sendto(b'Change the group please!', addr)
                     continue
 
         #######################################
         # clients[addr] = clients[addr]
         # print('\n\n\n')
-        print(message)
+        if message.find('disconnected the server.') != -1:
+            message = colored(message, 'red')
+            print(colored(message, 'red'))
+        elif message.find('has joined the chat.') != -1:
+            message = colored(message, 'green')
+            print(colored(message, 'green'))
+        else:
+            print(message)
+        # message += '\n=> '
         # print('\n\n')
         #######################################
         # try:
@@ -128,7 +142,7 @@ while True:
             group = clients[adr][1]
 
             if group == clients[addr][1] and adr != addr:
-                print(f'message has been sent to {to}-{name}-{group}')
+                print(colored(f'message has been sent to {to}-{name}-{group}', 'green'))
                 # message = encrypt(message)
                 # message = message.encode()
                 # print(type(message))

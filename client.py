@@ -1,8 +1,13 @@
 import socket
 from threading import Thread
 import sys
+from colorama import init
+from termcolor import colored
+
+init()
 
 host = '127.0.0.1'
+host = input(colored('ip: ', 'blue'))
 tcp_port = 19092
 
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -12,7 +17,7 @@ tcp_sock.connect((host, tcp_port))
 
 
 runProgram = True
-addr = ('127.0.0.1', 19090)
+addr = (host, 19090)
 
 dontuse = ['?', '&']
 
@@ -29,9 +34,9 @@ def receive():                                               # TODO receiving me
             data, server = udp_sock.recvfrom(1024)
             data = data.decode()
             data = decrypt(data)
-            print(data)
+            print(data + '\n=> ', end='')
         except KeyboardInterrupt:
-            print('[REC ERR...]')
+            print(colored('[REC ERR...]', 'red'))
             break
         except:
             pass
@@ -48,9 +53,11 @@ def createOrJoinGroup(groupKey):
         groupName = str(groupName).encode()               # decoding str to bytes
         # udp_sock.sendto(groupName, addr)                  # sending name of the group to server
         # conn, addr = tcp_sock.accept()
+        print(colored('Sending info...', 'blue'))
         tcp_sock.send(groupName)
         groupName = groupName.decode()
         try:
+            print(colored('Receiving info...', 'blue'))
             data = tcp_sock.recv(1024)                    # waiting for answer from the server
             data = data.decode()                          # decoding data from byte to utf-8
             data = decrypt(data)                          # uncoding data
@@ -58,12 +65,12 @@ def createOrJoinGroup(groupKey):
             # print("\n\n\n\n" + f'[GROUP {groupName[1:]} HAS BEEN CREATED]' + "\n\n\n")
 
             if data == f'[GROUP {groupName[1:]} HAS BEEN CREATED]':     # checking for errors
-                print (data)
+                print (colored(data, 'yellow'))
             else:
-                print (f'SOMETHING WRONG(try to rename group!)')
+                print (colored(f'SOMETHING WRONG(try to rename group!)', 'red'))
                 print(data)
         except:
-            print('ERR.. Something wrong!')
+            print(colored('ERR.. Something wrong!', 'red'))
 
 
 while runProgram:
@@ -83,7 +90,7 @@ while runProgram:
             groupKey = input('Enter group\'s secret key: ')
 
 
-        print(f'[TRYING TO ENTER GROUP: {groupKey}]')
+        print(colored(f'[TRYING TO ENTER GROUP: {groupKey}]', 'yellow'))
 
         ##################
         #    ENTERING    # TODO
@@ -107,7 +114,7 @@ while runProgram:
                 udp_sock.sendto(message, addr)
             except KeyboardInterrupt:
                 # receiving.join()
-                print('[EXITTING FROM THE CHAT...]')
+                print(colored('[EXITTING FROM THE CHAT...]', 'blue'))
                 message = f'{name} disconnected the server.'
                 message = encrypt(message)
                 message = message.encode()
@@ -116,7 +123,7 @@ while runProgram:
                 break
 
     except:
-        print('\n[PROGRAM HAS BEEN FINISHED]')
+        print(colored('\n[PROGRAM HAS BEEN FINISHED]', 'yellow'))
         # print(er)
         runProgram = False
         udp_sock.close()
