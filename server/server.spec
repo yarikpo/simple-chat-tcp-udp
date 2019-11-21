@@ -29,4 +29,4 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           runtime_tmpdir=None,
-          console=True , icon='D:\\GIT\\chat\\simple-chat-tcp-udp\\server\\icon.ico')
+          console=True , icon='icon.ico')

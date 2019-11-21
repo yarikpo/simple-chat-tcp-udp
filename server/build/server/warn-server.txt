@@ -27,6 +27,6 @@ missing module named 'java.lang' - imported by platform (delayed, optional), D:\
 missing module named vms_lib - imported by platform (delayed, conditional, optional), D:\GIT\chat\simple-chat-tcp-udp\server\server.py (top-level)
 missing module named termios - imported by tty (top-level), D:\GIT\chat\simple-chat-tcp-udp\server\server.py (top-level), getpass (optional)
 missing module named grp - imported by shutil (optional), tarfile (optional), D:\GIT\chat\simple-chat-tcp-udp\server\server.py (top-level)
-missing module named org - imported by pickle (optional), D:\GIT\chat\simple-chat-tcp-udp\server\server.py (top-level)
+missing module named 'org.python' - imported by pickle (optional), D:\GIT\chat\simple-chat-tcp-udp\server\server.py (top-level), xml.sax (delayed, conditional)
 missing module named pwd - imported by posixpath (delayed, conditional), shutil (optional), tarfile (optional), http.server (delayed, optional), webbrowser (delayed), D:\GIT\chat\simple-chat-tcp-udp\server\server.py (top-level), netrc (delayed, conditional), getpass (delayed)
-missing module named 'org.python' - imported by copy (optional), D:\GIT\chat\simple-chat-tcp-udp\server\server.py (top-level), xml.sax (delayed, conditional)
+missing module named org - imported by copy (optional), D:\GIT\chat\simple-chat-tcp-udp\server\server.py (top-level)

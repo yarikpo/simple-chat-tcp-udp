@@ -7,7 +7,7 @@ init()
 
 
 host = '127.0.0.1'
-host = input(colored('ip: ', 'blue'))
+host = input('ip: ')
 port = 19090
 
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
